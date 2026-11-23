@@ -369,6 +369,38 @@ table.bbt{min-width:660px}
 .cm-cell label{display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--muted)}
 .cm-out{margin-top:10px;font-size:15px}
 .err{color:var(--warn);font-size:14px}
+/* quick-revision flowcharts */
+.fc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px 10px;margin:22px 0 28px;box-shadow:var(--shadow);scroll-margin-top:72px}
+.fc-card > h3{margin:0 0 4px;font-size:19px}
+.fc-use{font-family:var(--sans);font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.fc-head,.fc-row{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px}
+.fc-head{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.fc-row{align-items:center;margin-bottom:24px}
+.fc-row:last-child{margin-bottom:8px}
+.fc-s{position:relative;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;padding:9px 12px 9px 44px;font-family:var(--sans);font-size:14.5px;line-height:1.5}
+.fc-s .n{position:absolute;left:10px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.fc-row:not(:last-child) .fc-s::after{content:"";position:absolute;left:21px;bottom:-24px;height:17px;border-left:2px solid var(--plot-axis)}
+.fc-row:not(:last-child) .fc-s::before{content:"";position:absolute;left:16px;bottom:-24px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid var(--plot-axis)}
+.fc-s.dec{border-color:var(--def);background:var(--def-bg)}
+.fc-s.dec .n{background:var(--def)}
+.fc-s.end{border-color:var(--ex);background:var(--ex-bg)}
+.fc-s.end .n{background:var(--ex)}
+.fc-s.chg{border-color:var(--plot-alt);border-width:2.5px}
+.fc-br{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.fc-br > *{font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:var(--text)}
+.fc-br .y{color:var(--ex);border-color:var(--ex)}
+.fc-br .no{color:var(--warn);border-color:var(--warn)}
+.fc-br a:hover{background:var(--accent-soft)}
+.fc-loop{display:block;margin-top:5px;font-size:12.5px;font-weight:650;color:var(--thm)}
+.fc-h{font-family:var(--sans);font-size:13.5px;line-height:1.5;border-left:3px solid var(--thm);background:var(--thm-bg);border-radius:0 8px 8px 0;padding:6px 10px;color:var(--text)}
+.fc-h b{color:var(--thm)}
+.fc-prac{font-family:var(--sans);font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px;margin:4px 0 2px}
+@media (max-width:700px){
+  .fc-head{display:none}
+  .fc-row{grid-template-columns:1fr;gap:6px;margin-bottom:16px}
+  .fc-row .fc-s::after,.fc-row .fc-s::before{display:none!important}
+  .fc-h{margin-left:22px}
+}
 
 /* ---------- misc ---------- */
 .kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:16px}
@@ -481,9 +513,19 @@ footer{border-top:1px solid var(--border);margin-top:60px;padding-top:18px;font-
         <li><a href="#s7-4">Which method to use?</a></li>
       </ol></li>
     <li><a href="#s8"><span class="num">8</span>Exam playbook &amp; memory hooks</a></li>
-    <li><a href="#pyq"><span class="num">9</span>Solved PYQs</a></li>
-    <li><a href="#tut"><span class="num">10</span>Tutorial Sheet 3</a></li>
-    <li><a href="#tools"><span class="num">11</span>Practice tools</a></li>
+    <li><a href="#flow"><span class="num">9</span>Quick-revision flowcharts</a>
+      <ol>
+        <li><a href="#fc-a">A. Which type of question?</a></li>
+        <li><a href="#fc-0">0. Getting the LP optimum</a></li>
+        <li><a href="#fc-b">B. Gomory: all-integer</a></li>
+        <li><a href="#fc-c">C. Gomory: mixed</a></li>
+        <li><a href="#fc-d">D. Dual simplex</a></li>
+        <li><a href="#fc-e">E. Branch and bound</a></li>
+        <li><a href="#fc-f">F. Formulation</a></li>
+      </ol></li>
+    <li><a href="#pyq"><span class="num">10</span>Solved PYQs</a></li>
+    <li><a href="#tut"><span class="num">11</span>Tutorial Sheet 3</a></li>
+    <li><a href="#tools"><span class="num">12</span>Practice tools</a></li>
   </ol>
 </nav>
 
@@ -518,8 +560,9 @@ footer{border-top:1px solid var(--border);margin-top:60px;padding-top:18px;font-
 <tr><td>Dual simplex method (placed in Q4 because Gomory needs it)</td><td>2025, Summer 2026</td><td><a href="#s3-3">§3.3</a></td></tr>
 </tbody></table></div>
 
+<div class="callout tip"><p class="ct">Already studied this unit once?</p><p>Skip straight to the <a href="#flow"><b>quick-revision flowcharts (§9)</b></a>: one short flowchart per type of question, with a memory hook beside every step. Then start the <a href="#pyq">PYQs (§10)</a>.</p></div>
 <h3>How to use these notes</h3>
-<p>Read §1 → §7 in order. §3 is a refresher of the simplex machinery from Units 1–2 that Gomory's method relies on; skip it if you are confident. §5 is the heart of the notes: the lecture video shows one smooth example, but the exam can throw negative coefficients, ties, fractions in the constraints, Min problems, ≥ rows, several cuts, or a problem with no integer solution. §5 shows what to do in each case. Then try the <a href="#pyq">PYQs</a> (§9) and <a href="#tut">tutorial questions</a> (§10) yourself before opening the solutions. The <a href="#tools">practice tools</a> (§11) solve any small problem you type in and show every table, so you can check your own practice.</p>
+<p>Read §1 → §7 in order. §3 is a refresher of the simplex machinery from Units 1–2 that Gomory's method relies on; skip it if you are confident. §5 is the heart of the notes: the lecture video shows one smooth example, but the exam can throw negative coefficients, ties, fractions in the constraints, Min problems, ≥ rows, several cuts, or a problem with no integer solution. §5 shows what to do in each case. Then try the <a href="#pyq">PYQs</a> (§10) and <a href="#tut">tutorial questions</a> (§11) yourself before opening the solutions. The <a href="#tools">practice tools</a> (§12) solve any small problem you type in and show every table, so you can check your own practice.</p>
 
 <h3>Which section do I need?</h3>
 <div class="flow">
@@ -621,14 +664,14 @@ $$g_i(x) \le b_i + My_i\quad (i = 1,\dots,m),\qquad y_1 + \dots + y_m = m - k,\q
 <p>$y_i = 1$ means "constraint $i$ is allowed to fail". At most $m - k$ of them may fail, so at least $k$ hold. (Writing $\le m-k$ is equally correct.)</p></div>
 <div class="callout tip"><p class="ct">Memory hook</p><p><b>$+My$ switches a constraint off when $y = 1$.</b> "If–then" is just either–or in disguise: "if $g_1 &gt; b_1$ then $g_2 \le b_2$" means the same as "$g_1 \le b_1$ <i>or</i> $g_2 \le b_2$".</p></div>
 <p>$M$ must be large enough that $b_i + M$ can never be reached. In the exam just write "$M$ is a very large positive number".</p>
-<p>The 2022 paper (Q4a) asked exactly this. Its full solution is in <a href="#q-e22-4a">§9</a>.</p>
+<p>The 2022 paper (Q4a) asked exactly this. Its full solution is in <a href="#q-e22-4a">§10</a>.</p>
 
 <h3 id="s2-4"><span class="sub">2.4</span>Fixed-charge (set-up) costs</h3>
 <p>Producing product $j$ costs a fixed set-up charge $K_j$ <i>if you make any at all</i>, plus $c_j$ per unit. So cost $= K_j + c_jx_j$ if $x_j &gt; 0$, and $0$ if $x_j = 0$. That jump at 0 is not linear. Fix it with a 0–1 variable $y_j$:</p>
 <div class="callout thm"><p class="ct">Rule <span class="name">Fixed charge</span></p>
 $$\text{cost} = K_jy_j + c_jx_j,\qquad x_j \le My_j,\qquad y_j \in \{0,1\}.$$
 <p>If you produce ($x_j &gt; 0$), then $x_j \le My_j$ forces $y_j = 1$ and you pay $K_j$. If you don't produce, the objective (minimising cost or maximising profit) automatically chooses $y_j = 0$. In place of $M$ you can use any known upper limit on $x_j$.</p></div>
-<p>A variation (2022 Q4b): the fixed cost depends on <i>which range</i> the total labour falls in. You use one 0–1 variable per range and allow at most one of them to be 1. The full solution is in <a href="#q-e22-4b">§9</a>.</p>
+<p>A variation (2022 Q4b): the fixed cost depends on <i>which range</i> the total labour falls in. You use one 0–1 variable per range and allow at most one of them to be 1. The full solution is in <a href="#q-e22-4b">§10</a>.</p>
 
 <h3 id="s2-5"><span class="sub">2.5</span>Other tricks</h3>
 <ul>
@@ -688,7 +731,7 @@ $$\text{cost} = K_jy_j + c_jx_j,\qquad x_j \le My_j,\qquad y_j \in \{0,1\}.$$
 </ol>
 <p class="small">Ties: if two rows are equally negative, or two ratios are equal, you may pick either. These notes take the upper row and the left-most column, as the lecture video does.</p></div>
 <div class="callout tip"><p class="ct">Memory hook</p><p><b>Simplex = Column first, then row. Dual simplex = Row first, then column.</b> In simplex the entering column has the most negative Z<sub>j</sub>−C<sub>j</sub> and the pivot is positive. In dual simplex the leaving row has the most negative X<sub>B</sub> and the pivot is <i>negative</i>. Taking the ratio closest to 0 keeps every Z<sub>j</sub>−C<sub>j</sub> ≥ 0.</p></div>
-<p>The two dual simplex PYQs (Endsem 2025 Q4c, Summer 2026 Q4b) are solved in <a href="#q-e25-4c">§9</a>. The first one is an example of "no negative entry", i.e. no feasible solution.</p>
+<p>The two dual simplex PYQs (Endsem 2025 Q4c, Summer 2026 Q4b) are solved in <a href="#q-e25-4c">§10</a>. The first one is an example of "no negative entry", i.e. no feasible solution.</p>
 
 <h3 id="s3-4"><span class="sub">3.4</span>Integer part and fractional part (including negatives)</h3>
 <div class="callout def"><p class="ct">Definition</p>
@@ -947,7 +990,7 @@ In both cases the left side of the cut (a sum of two non-negative pieces) is $\g
 <p><b>Node 4 ($x_1 \le 3,\ x_2 \ge 4$).</b> (1) needs $3x_1 \ge 7(4) - 14 = 14$, i.e. $x_1 \ge \tfrac{14}3 &gt; 3$: <b>infeasible</b>.</p></div></div>
 <div class="step"><div class="sn">4</div><div><p>No open nodes remain, so the incumbent is optimal.</p></div></div>
 <figure class="fig bbfig"><div class="bbscroll"><svg viewBox="0 0 436 290" class="bbtree" role="img" aria-label="Branch and bound tree"><line x1="246.5" y1="67" x2="140" y2="113" class="s-muted"/><text x="187.25" y="94" font-size="11.5" text-anchor="end" class="t-b t-alt">x₁ ≤ 3</text><line x1="246.5" y1="67" x2="353" y2="113" class="s-muted"/><text x="305.75" y="94" font-size="11.5" text-anchor="start" class="t-b t-alt">x₁ ≥ 4</text><line x1="140" y1="175" x2="69" y2="221" class="s-muted"/><text x="98.5" y="202" font-size="11.5" text-anchor="end" class="t-b t-alt">x₂ ≤ 3</text><line x1="140" y1="175" x2="211" y2="221" class="s-muted"/><text x="181.5" y="202" font-size="11.5" text-anchor="start" class="t-b t-alt">x₂ ≥ 4</text><rect x="182.5" y="5" width="128" height="62" rx="9" class="bb-n"/><text x="246.5" y="21" font-size="11.5" text-anchor="middle" class="t-b">Node 0</text><text x="246.5" y="37" font-size="11" text-anchor="middle">(7/2, 7/2)</text><text x="246.5" y="52" font-size="11" text-anchor="middle">Z = 35/2</text><rect x="76" y="113" width="128" height="62" rx="9" class="bb-n"/><text x="140" y="129" font-size="11.5" text-anchor="middle" class="t-b">Node 1</text><text x="140" y="145" font-size="11" text-anchor="middle">(3, 23/7)</text><text x="140" y="160" font-size="11" text-anchor="middle">Z = 111/7</text><rect x="289" y="113" width="128" height="62" rx="9" class="bb-bad"/><text x="353" y="129" font-size="11.5" text-anchor="middle" class="t-b">Node 2</text><text x="353" y="149" font-size="11" text-anchor="middle">infeasible</text><text x="353" y="172" font-size="9.5" text-anchor="middle" class="t-bad t-b">fathomed</text><rect x="5" y="221" width="128" height="62" rx="9" class="bb-ok"/><text x="69" y="237" font-size="11.5" text-anchor="middle" class="t-b">Node 3</text><text x="69" y="253" font-size="11" text-anchor="middle">(3, 3)</text><text x="69" y="268" font-size="11" text-anchor="middle">Z = 15</text><text x="69" y="280" font-size="9.5" text-anchor="middle" class="t-ok t-b">OPTIMAL</text><rect x="147" y="221" width="128" height="62" rx="9" class="bb-bad"/><text x="211" y="237" font-size="11.5" text-anchor="middle" class="t-b">Node 4</text><text x="211" y="257" font-size="11" text-anchor="middle">infeasible</text><text x="211" y="280" font-size="9.5" text-anchor="middle" class="t-bad t-b">fathomed</text></svg></div><figcaption><b>Branch and bound tree for Tutorial Q3.</b> Each box shows the LP optimum (x₁, x₂) and its Z. The branch constraint is written on each edge. Green = optimal integer node, red = infeasible.</figcaption></figure><div class="tbl-wrap"><table class="tbl bbt"><thead><tr><th>Node</th><th>Extra constraints</th><th>LP optimum</th><th>Z</th><th>Decision</th></tr></thead><tbody><tr><td>0</td><td>&mdash; (original LP)</td><td>$(\tfrac{7}{2},\,\tfrac{7}{2})$<br><span class="small muted">tight: (1), (2)</span></td><td>$\tfrac{35}{2}$</td><td>Fractional $x_{1}$ = $\tfrac{7}{2}$ &rArr; branch on $x_{1} \le 3$ / $x_{1} \ge 4$</td></tr><tr><td>1</td><td>$x_{1} \le 3$</td><td>$(3,\,\tfrac{23}{7})$<br><span class="small muted">tight: (1), $x_{1} \le 3$</span></td><td>$\tfrac{111}{7}$</td><td>Fractional $x_{2}$ = $\tfrac{23}{7}$ &rArr; branch on $x_{2} \le 3$ / $x_{2} \ge 4$</td></tr><tr><td>2</td><td>$x_{1} \ge 4$</td><td>&mdash;</td><td>&mdash;</td><td>Infeasible &rArr; fathomed</td></tr><tr><td>3</td><td>$x_{1} \le 3$, $x_{2} \le 3$</td><td>$(3,\,3)$<br><span class="small muted">tight: $x_{1} \le 3$, $x_{2} \le 3$</span></td><td>$15$</td><td><span class="yes">All integer &rArr; best solution (optimal)</span></td></tr><tr><td>4</td><td>$x_{1} \le 3$, $x_{2} \ge 4$</td><td>&mdash;</td><td>&mdash;</td><td>Infeasible &rArr; fathomed</td></tr></tbody></table></div>
-<div class="answer"><p>$x_1 = 3,\ x_2 = 3$, Max $Z = 15$: the same answer as Gomory's method in <a href="#t3">§10, Q3</a>.</p></div>
+<div class="answer"><p>$x_1 = 3,\ x_2 = 3$, Max $Z = 15$: the same answer as Gomory's method in <a href="#t3">§11, Q3</a>.</p></div>
 
 <h3 id="s7-4"><span class="sub">7.4</span>Which method should I use?</h3>
 <div class="tbl-wrap"><table class="tbl">
@@ -959,7 +1002,7 @@ In both cases the left side of the cut (a sum of two non-negative pieces) is $\g
 <tr><td>"Suitable method", 3+ variables, no small bounds</td><td>Gomory: it is purely table-based.</td></tr>
 <tr><td>Mixed problem, method not named</td><td>Either works: Gomory with the mixed cut, or branch and bound on the integer variables only.</td></tr>
 </tbody></table></div>
-<p>Endsem 2025 Q4a ("solve by a suitable method", bounds $0 \le x_j \le 2$) is solved both ways in <a href="#q-e25-4a">§9</a>.</p>
+<p>Endsem 2025 Q4a ("solve by a suitable method", bounds $0 \le x_j \le 2$) is solved both ways in <a href="#q-e25-4a">§10</a>.</p>
 </section>
 
 <!-- ===================================================== S8 -->
@@ -1013,9 +1056,146 @@ In both cases the left side of the cut (a sum of two non-negative pieces) is $\g
 </section>
 
 
+<!-- ===================================================== FLOWCHARTS -->
+<section class="unit" id="flow">
+<h2><span class="secnum">9</span>Quick-revision flowcharts</h2>
+<p class="sec-intro">For when you have already studied the unit: one short flowchart per type of question, with a memory hook beside every step. Read the right one, then go straight to the PYQs.</p>
+
+<div class="case-grid">
+<a class="case" href="#fc-a"><b>A. Which type of question?</b><span>Start here: picks the flowchart.</span></a>
+<a class="case" href="#fc-0"><b>0. Getting the LP optimum</b><span>Min, ≥, = rows, fractions. Used by B and C.</span></a>
+<a class="case" href="#fc-b"><b>B. Gomory: all-integer</b><span>Cut → dual simplex → repeat.</span></a>
+<a class="case" href="#fc-c"><b>C. Gomory: mixed</b><span>Same loop, different cut.</span></a>
+<a class="case" href="#fc-d"><b>D. Dual simplex</b><span>Min with ≥ rows, asked on its own.</span></a>
+<a class="case" href="#fc-e"><b>E. Branch and bound</b><span>Split, solve, fathom.</span></a>
+<a class="case" href="#fc-f"><b>F. Formulation</b><span>0–1 variables and +My tricks.</span></a>
+</div>
+
+<!-- A -->
+<div class="fc-card" id="fc-a">
+<h3>A. Which type of question is it?</h3>
+<p class="fc-use">Answer the questions top to bottom; the first "yes" tells you which flowchart to use.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does it ask you to <b>formulate</b> / write the model (word problem, "at least one of these holds", fixed costs)?<div class="fc-br"><a class="y" href="#fc-f">Yes → F</a><span class="no">No ↓</span></div></div><div class="fc-h"><b>Read the last line first.</b> It almost always names the task or the method.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does it say <b>branch and bound</b>?<div class="fc-br"><a class="y" href="#fc-e">Yes → E</a><span class="no">No ↓</span></div></div><div class="fc-h">"Gomory", "cutting plane" or no method named ⇒ Gomory.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does it say <b>dual simplex</b>, with no integer condition?<div class="fc-br"><a class="y" href="#fc-d">Yes → D</a><span class="no">No ↓</span></div></div><div class="fc-h">No "integers" anywhere ⇒ it's an LP, not an IPP.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does it say "solve by a <b>suitable method</b>"?<div class="fc-br"><a class="y" href="#fc-e">2 variables + small bounds → E</a><span class="no">otherwise ↓</span></div></div><div class="fc-h">Small box like $0 \le x_j \le 2$ ⇒ branch and bound is the quickest.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Must <b>all</b> variables be integers?<div class="fc-br"><a class="y" href="#fc-b">All → B</a><a class="no" href="#fc-c">Only some → C</a></div></div><div class="fc-h"><b>"x₁ is an integer"</b> (only one is named) ⇒ <b>mixed</b>. "x₁, x₂ are integers" ⇒ pure.</div></div>
+</div>
+</div>
+
+<!-- 0 -->
+<div class="fc-card" id="fc-0">
+<h3>0. Getting to the LP optimum <span class="muted small">(first part of B and C)</span></h3>
+<p class="fc-use">Ignore the integer condition and solve the LP. The only question is how to start the first table.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span><b>Min?</b> Maximise $Z' = -Z$ (change the sign of every cost).</div><div class="fc-h"><b>Flip in, flip out:</b> at the end, Min $Z = -Z'$.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">2</span><b>Pure problem with fractions/decimals in a row?</b> Multiply that row by the LCM.</div><div class="fc-h"><b>Slacks must be whole numbers</b>, or the pure cut is wrong. (Mixed: skip this.)</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span><b>What kind of rows?</b>
+<div class="fc-br"><span class="y">all ≤ → add slacks, simplex</span></div>
+<div class="fc-br"><span class="y">≥ rows and all $C_j \le 0$ → ×(−1), slacks, dual simplex</span></div>
+<div class="fc-br"><span class="no">≥ in Max with +ve costs, or = rows → two-phase</span></div></div>
+<div class="fc-h"><b>Min-cost with ≥ ⇒ flip the rows</b>, no artificials needed.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span><b>Two-phase</b> (if needed). Add a surplus − and an artificial + to each ≥ row (just the artificial for =). <b>Phase I:</b> maximise $W = -\sum A_i$. $W &lt; 0$ at the end ⇒ infeasible. <b>Phase II:</b> drop the $A$ columns, put back the real costs, recompute $Z_j - C_j$.</div><div class="fc-h"><b>First get feasible (W = 0), then get optimal.</b></div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">4</span><b>Simplex:</b> enter = most negative $Z_j - C_j$. Leave = smallest $X_B/a$ over <b>positive</b> $a$. Pivot, then row operations.</div><div class="fc-h"><b>Column first, then row.</b> The pivot is positive.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span>All $Z_j - C_j \ge 0$ ⇒ LP optimum. (No positive entry in the entering column ⇒ unbounded.)</div><div class="fc-h">Max: $Z_{IP} \le Z_{LP}$. <b>Relaxing never hurts.</b></div></div>
+</div>
+</div>
+
+<!-- B -->
+<div class="fc-card" id="fc-b">
+<h3>B. Gomory's method: all-integer (pure) problem</h3>
+<p class="fc-use">Asked in 2022, 2024, 2025 and Summer 2026.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span>Get the <b>LP optimum</b> with <a href="#fc-0">flowchart 0</a>.</div><div class="fc-h">Integer condition <b>ignored</b> for now.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Is every $x_j$ an integer in $X_B$?<div class="fc-br"><span class="y">Yes → STOP (step 8)</span><span class="no">No ↓</span></div></div><div class="fc-h">Already integer ⇒ <b>no cut</b>. Non-basic = 0, which counts as an integer.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">2</span><b>Source row:</b> the basic $x$ with the <b>largest fractional part</b> $f$ (tie → upper row).</div><div class="fc-h"><b>Biggest fraction, not biggest number.</b> $\tfrac{6}{5}$ ($f = \tfrac15$) beats $\tfrac{21}{10}$ ($f = \tfrac1{10}$).</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span>Write the row as an equation and <b>split every number</b>: $a = \lfloor a\rfloor + f$.</div><div class="fc-h"><b>Round down, measure up.</b> Negative: $f = 1 - |\text{fraction}|$, so $-\tfrac23 \to \tfrac13$ and $-\tfrac16 \to \tfrac56$.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">4</span><b>Cut:</b> $\sum f_j x_j \ge f$. Whole-number coefficients drop out.</div><div class="fc-h"><b>Fractions ≥ Fraction.</b> Every coefficient in the cut is ≥ 0.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">5</span>×(−1) and add $G$: $\;-\sum f_jx_j + G = -f$. Append it as a new row with $C_B = 0$ and $X_B = -f$.</div><div class="fc-h"><b>Flip and add G.</b> The table is still optimal, but now infeasible.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">6</span><b>Dual simplex:</b> leave = most negative $X_B$. Enter = <b>max</b> of $\frac{Z_j - C_j}{a_{rj}}$ over $a_{rj} &lt; 0$. Pivot. Repeat until every $X_B \ge 0$.</div><div class="fc-h"><b>Row first, then column.</b> The ratio closest to 0 wins. The pivot is negative.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does the leaving row have <b>no negative entry</b>?<div class="fc-br"><span class="no">Yes → no integer solution, STOP</span><span class="y">No ↓</span></div></div><div class="fc-h">"Non-negative stuff = negative number" is impossible.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">7</span>Go back to the integer check.<span class="fc-loop">↺ loop: check → cut → dual simplex</span></div><div class="fc-h">Keep the old rows. A non-basic $G_1$ can appear in the next cut.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">8</span><b>Answer:</b> the $x$ values and $Z$ (Min: $Z = -Z'$). If a non-basic $Z_j - C_j = 0$, mention a possible alternative optimum.</div><div class="fc-h">Final line: "all $Z_j - C_j \ge 0$, $X_B \ge 0$, all integers ⇒ optimal".</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-e24-4a">Endsem 2024 Q4a</a> · <a href="#q-e22-4a">Endsem 2022 Q4a(ii)</a> · <a href="#q-s26-4c">Summer 2026 Q4c</a> · <a href="#t1">Tut Q1</a>–<a href="#t4">Q4</a></p>
+</div>
+
+<!-- C -->
+<div class="fc-card" id="fc-c">
+<h3>C. Gomory's method: mixed problem</h3>
+<p class="fc-use">Same loop as B. Only three things change: the boxes with an <b style="color:var(--plot-alt)">orange border</b>.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span>Get the <b>LP optimum</b> (<a href="#fc-0">flowchart 0</a>; no need to clear fractions).</div><div class="fc-h">Same start as pure.</div></div>
+<div class="fc-row"><div class="fc-s dec chg"><span class="n">?</span>Are the <b>integer-restricted</b> variables integers?<div class="fc-br"><span class="y">Yes → STOP</span><span class="no">No ↓</span></div></div><div class="fc-h"><b>Only the named ones must be whole.</b> Continuous ones may stay as $\tfrac{10}{3}$.</div></div>
+<div class="fc-row"><div class="fc-s chg"><span class="n">2</span><b>Source row:</b> only rows whose basic variable is <b>integer-restricted</b>; take the largest $f$.</div><div class="fc-h">Rows of continuous variables or slacks are <b>never</b> source rows.</div></div>
+<div class="fc-row"><div class="fc-s chg"><span class="n">3</span><b>Cut coefficients:</b> $a_j &gt; 0$ → keep $a_j$ <b>whole</b>. $a_j &lt; 0$ → $a_j \times \frac{f}{f-1}$. Cut: (sum) $\ge f$.</div><div class="fc-h"><b>Positives stay, Negatives get $\frac{f}{f-1}$.</b> No splitting into fractions. $\tfrac43$ stays $\tfrac43$, and 1 stays 1.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">4</span>×(−1), add $G$, append the row, dual simplex, loop. Exactly B's steps 5–8.</div><div class="fc-h">Example: $f = \tfrac12$ ⇒ $\frac{f}{f-1} = -1$; $f = \tfrac34$ ⇒ $-3$.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span><b>Answer:</b> integer variables whole, continuous ones as they come.</div><div class="fc-h">Optional: for an <i>integer</i> non-basic variable, use $f_j$ if $f_j \le f$, else $\frac{f(1-f_j)}{1-f}$ (never needed in the PYQs).</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-e22-4c">Endsem 2022/2024 Q4c</a> · <a href="#q-e25-4b">Endsem 2025 Q4b</a> · <a href="#q-s26-4a">Summer 2026 Q4a</a> · <a href="#t5">Tut Q5</a>–<a href="#t8">Q8</a></p>
+</div>
+
+<!-- D -->
+<div class="fc-card" id="fc-d">
+<h3>D. Dual simplex method (asked on its own)</h3>
+<p class="fc-use">Typical form: Min with positive costs and ≥ rows. Asked in 2025 and Summer 2026.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span>Min → Max $Z' = -Z$. Every ≥ row ×(−1) → ≤ with a negative RHS. Add slacks; they form the first basis.</div><div class="fc-h"><b>Flip the objective, flip the ≥ rows.</b></div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Are all $Z_j - C_j \ge 0$ and some $X_B &lt; 0$?<div class="fc-br"><span class="y">Yes ↓ dual simplex</span><span class="no">all $X_B \ge 0$ → already optimal</span></div></div><div class="fc-h"><b>Optimal but infeasible</b> is the dual simplex's job.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">2</span><b>Leave:</b> the row with the most negative $X_B$.</div><div class="fc-h"><b>Most negative row leaves.</b></div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Does that row have a negative entry?<div class="fc-br"><span class="no">No → no feasible solution, STOP</span><span class="y">Yes ↓</span></div></div><div class="fc-h">E.g. Endsem 2025 Q4c ends right here.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span><b>Enter:</b> max of $\frac{Z_j - C_j}{a_{rj}}$ over $a_{rj} &lt; 0$. Pivot. Repeat from step 2.</div><div class="fc-h"><b>Closest to zero enters.</b> Ignore positive entries.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span>All $X_B \ge 0$ ⇒ optimal. Min $Z = -Z'$.</div><div class="fc-h">The table was always optimal; now it is feasible too.</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-e25-4c">Endsem 2025 Q4c</a> · <a href="#q-s26-4b">Summer 2026 Q4b</a></p>
+</div>
+
+<!-- E -->
+<div class="fc-card" id="fc-e">
+<h3>E. Branch and bound</h3>
+<p class="fc-use">Asked in 2024; also the best "suitable method" for small 2-variable problems.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span><b>Node 0:</b> solve the LP. With 2 variables, the optimum is at the corner where two constraints are tight: solve those two equations.</div><div class="fc-h"><b>2 variables ⇒ graph it</b>, no simplex needed.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">?</span>Is the LP optimum integer?<div class="fc-br"><span class="y">Yes → done</span><span class="no">No ↓</span></div></div><div class="fc-h">Same bounding idea: LP value = best possible below this node.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">2</span><b>Branch</b> on the variable with the biggest fraction, $x_j = v$: one child gets $x_j \le \lfloor v\rfloor$, the other $x_j \ge \lceil v\rceil$.</div><div class="fc-h"><b>Floor left, ceiling right.</b> Children keep all their parent's constraints.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span>Solve each child's LP. <b>Fathom</b> it if it is <b>Infeasible</b>, <b>Integer</b> (becomes the incumbent if better), or <b>Inferior</b> (Z ≤ incumbent for Max).</div><div class="fc-h"><b>The three I's.</b></div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">4</span>Branch the open node with the best Z. Repeat until no node is open.<span class="fc-loop">↺ loop: pick → branch → solve → fathom</span></div><div class="fc-h"><b>Min problems:</b> lower Z is better, and prune if Z ≥ incumbent.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span><b>Answer</b> = the incumbent. Draw the tree (node, LP solution, Z, decision).</div><div class="fc-h">Mixed: branch only on integer-restricted variables.</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-e24-4b">Endsem 2024 Q4b</a> · <a href="#q-e25-4a">Endsem 2025 Q4a</a> · <a href="#s7-3">§7.3 (Tut Q3)</a></p>
+</div>
+
+<!-- F -->
+<div class="fc-card" id="fc-f">
+<h3>F. Formulation</h3>
+<p class="fc-use">Asked in 2022 (either–or / at-least-k constraints, fixed costs by labour range).</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span><b>Variables:</b> quantities $x_j \ge 0$ (integer); yes/no decisions $y \in \{0,1\}$.</div><div class="fc-h"><b>Countable ⇒ integer. Yes/no ⇒ 0–1.</b></div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">2</span><b>Objective + ordinary constraints</b>, as in Unit 1.</div><div class="fc-h">Profit − fixed costs, or total cost.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span><b>Logic patterns:</b><br>
+at most $k$: $\sum y \le k$ · exclusive: $y_1 + y_2 \le 1$ · B only if A: $y_B \le y_A$<br>
+<b>either–or:</b> $g_1 \le b_1 + My$, $g_2 \le b_2 + M(1-y)$<br>
+<b>at least $k$ of $m$:</b> $g_i \le b_i + My_i$, $\sum y_i = m - k$<br>
+<b>fixed charge:</b> cost $Ky + cx$, with $x \le My$<br>
+<b>listed values:</b> $x = \sum v_iy_i$, $\sum y_i = 1$</div><div class="fc-h"><b>+My switches a constraint OFF when y = 1.</b> "If A then B" = "not A or B" ⇒ either–or.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span>Finish with: "$x_j \ge 0$ integers, $y \in \{0,1\}$, $M$ a very large number".</div><div class="fc-h">This $M$ is just a large constant, not the Big-M method.</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-e22-4a">Endsem 2022 Q4a(i)</a> · <a href="#q-e22-4b">Endsem 2022 Q4b</a></p>
+</div>
+</section>
+
+
 <!-- ===================================================== PYQ -->
 <section class="unit" id="pyq">
-<h2><span class="secnum">9</span>Solved PYQs</h2>
+<h2><span class="secnum">10</span>Solved PYQs</h2>
 <p class="sec-intro">Every Unit 4 question from the 2022, 2024, 2025 and Summer 2026 end-semester papers, plus the two dual simplex parts that were set in Q4. Try each one first, then open the solution. Every final answer was confirmed by brute-force search over integer points.</p>
 <div class="toolbar"><button class="tbtn" id="expandPyq">Expand all PYQs</button><button class="tbtn" id="collapsePyq">Collapse all PYQs</button></div>
 
@@ -1127,7 +1307,7 @@ $$x_1, x_2, x_3 \ge 0 \text{ and integers},\qquad y_1, y_2, y_3 \in \{0,1\}.$$</
 
 <!-- ===================================================== TUT -->
 <section class="unit" id="tut">
-<h2><span class="secnum">10</span>Tutorial Sheet 3, fully solved</h2>
+<h2><span class="secnum">11</span>Tutorial Sheet 3, fully solved</h2>
 <p class="sec-intro">Q1–Q4 are all-integer (pure Gomory), Q5–Q8 are mixed-integer, and Q9–Q10 are duality questions from Unit 2 (in the appendix at the end). Every table is shown.</p>
 <div class="tbl-wrap"><table class="tbl">
 <thead><tr><th>Q</th><th>Type</th><th>Answer</th><th>Cuts</th></tr></thead>
@@ -1220,7 +1400,7 @@ $$2y_1 + 8y_3 = 5,\qquad y_1 - 3y_3 = -4 .$$
 
 <!-- ===================================================== TOOLS -->
 <section class="unit" id="tools">
-<h2><span class="secnum">11</span>Practice tools</h2>
+<h2><span class="secnum">12</span>Practice tools</h2>
 <p class="sec-intro">Make up your own problems, solve them on paper, then check every table here. Everything runs in your browser with exact fractions.</p>
 
 <div class="widget" id="w-solver">
