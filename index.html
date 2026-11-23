@@ -1020,6 +1020,104 @@ $$V=\left[\frac{\partial^2L(x,\lambda)}{\partial x_i\partial x_j}\right]_{n\time
 <p>Your class notes and the textbook state the maximum condition as "alternating, starting with $(-1)^{m+n}$". Read literally, this contradicts their own one-constraint rule. With $n=2,\ m=1$ it gives $(-1)^3$ (negative), yet the one-constraint rule says $D_3>0$ for a max. The correct starting sign is $\boldsymbol{(-1)^{m+1}}$ (as in Taha). The two versions agree only when $n$ is odd: e.g. $n=3,\ m=2$, where both say $D_5\lt0$ for max. Use $(-1)^{m+1}$ and you will never go wrong.</p></div>
 <div class="callout tip"><p class="ct">These conditions are sufficient, not necessary</p><p>If a required minor comes out $0$, or the signs match neither pattern, the test is <b>inconclusive</b>. It does not prove "neither max nor min". If $f$ is convex (concave) and the constraints are linear, the stationary point is a global min (max) anyway.</p></div>
 
+<p>Here is the rule in action for <b>two constraints</b>. Every two-constraint PYQ so far has had $n=3$, $m=2$, which gives a 5×5 bordered Hessian with only <b>one</b> minor to check: the full determinant $D_5=|H^B|$. Its sign decides everything:</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>$n=3,\ m=2$</th><th>Order of minors</th><th>Rule</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>Minimum</td><td>$2m+1=5$ up to $m+n=5$: just $D_5$</td><td>sign of $(-1)^m=(-1)^2$</td><td>$D_5>0$</td></tr>
+<tr><td>Maximum</td><td>just $D_5$</td><td>sign of $(-1)^{m+1}=(-1)^3$</td><td>$D_5\lt0$</td></tr>
+</tbody></table></div>
+<p>Note that this is the <b>opposite</b> of the one-constraint case, where a negative determinant meant a minimum. Each extra constraint flips the sign pattern, so never reuse the $m=1$ signs when $m=2$.</p>
+
+<div class="example" id="ex-bh-m2-min"><div class="eh">Example 3: two constraints, a minimum (n = 3, m = 2)</div>
+<div class="problem"><p>Use the method of Lagrange multipliers to find the optimum of $f=x_1^2+x_2^2+x_3^2$ subject to
+$$x_1+x_2+x_3=6,\qquad x_1-x_3=2.$$
+Use the bordered Hessian to decide whether it is a maximum or a minimum.</p></div>
+<div class="step"><div class="sn">1</div><div><p><b>Lagrangian.</b> There are two constraints, so there are two multipliers:
+$$\begin{aligned}L=\ &x_1^2+x_2^2+x_3^2\\ &-\lambda_1(x_1+x_2+x_3-6)-\lambda_2(x_1-x_3-2).\end{aligned}$$</p></div></div>
+<div class="step"><div class="sn">2</div><div><p><b>Necessary conditions.</b> Set every partial derivative to zero:
+$$\begin{aligned}\frac{\partial L}{\partial x_1}&=2x_1-\lambda_1-\lambda_2=0\\[1mm] \frac{\partial L}{\partial x_2}&=2x_2-\lambda_1=0\\[1mm] \frac{\partial L}{\partial x_3}&=2x_3-\lambda_1+\lambda_2=0\end{aligned}$$
+Express each $x_j$ in terms of the $\lambda$'s: $x_1=\tfrac{\lambda_1+\lambda_2}{2},\ x_2=\tfrac{\lambda_1}{2},\ x_3=\tfrac{\lambda_1-\lambda_2}{2}$. Substitute into the constraints ($\partial L/\partial\lambda_i=0$):</p>
+<ul>
+<li>$x_1+x_2+x_3=\tfrac{3\lambda_1}{2}=6$, so $\lambda_1=4$.</li>
+<li>$x_1-x_3=\lambda_2=2$, so $\lambda_2=2$.</li></ul>
+<p>Hence $x_1=3,\ x_2=2,\ x_3=1$. Stationary point $x_0=(3,2,1)$, $\lambda_0=(4,2)$. Check: $3+2+1=6$ ✓ and $3-1=2$ ✓.</p></div></div>
+<div class="step"><div class="sn">3</div><div><p><b>Build the bordered Hessian.</b></p>
+<ul>
+<li>$U$ (2×3): row $i$ holds the coefficients of constraint $i$. That is $(1,1,1)$ and $(1,0,-1)$.</li>
+<li>$V$ (3×3): the Hessian of $L$. The constraints are linear, so it equals the Hessian of $f$: $\operatorname{diag}(2,2,2)$.</li>
+<li>$O$ (2×2): zeros in the top-left corner.</li></ul>
+$$H^B=\left[\begin{array}{cc|ccc}
+0&0&1&1&1\\
+0&0&1&0&-1\\ \hline
+1&1&2&0&0\\
+1&0&0&2&0\\
+1&-1&0&0&2
+\end{array}\right]$$
+<p>The first two columns are the transpose of the first two rows. That is how you know the border is right.</p></div></div>
+<div class="step"><div class="sn">4</div><div><p><b>Which minors?</b> $n=3$, $m=2$, so $n-m=1$ minor, of order $2m+1=5$. Only $D_5=|H^B|$ is needed.</p></div></div>
+<div class="step"><div class="sn">5</div><div><p><b>Evaluate the 5×5 determinant.</b> Expanding directly would give five 4×4 determinants. Instead, first create zeros in column 1 using row operations, which do not change the determinant.</p>
+<p>$R_4\to R_4-R_3$ and $R_5\to R_5-R_3$:
+$$|H^B|=\begin{vmatrix}
+0&0&1&1&1\\
+0&0&1&0&-1\\
+\boxed{1}&1&2&0&0\\
+0&-1&-2&2&0\\
+0&-2&-2&0&2
+\end{vmatrix}$$
+Column 1 now has a single non-zero entry, the boxed $1$ in position $(3,1)$. Expand along column 1. The cofactor sign is $(-1)^{3+1}=+1$. Delete row 3 and column 1:
+$$|H^B|=+1\cdot\begin{vmatrix}
+0&1&1&1\\
+0&1&0&-1\\
+-1&-2&2&0\\
+-2&-2&0&2
+\end{vmatrix}$$
+Repeat the trick. $R_4\to R_4-2R_3$ gives the row $(0,\ 2,\ -4,\ 2)$, which leaves only the $-1$ in column 1, in position $(3,1)$, with sign $+1$:
+$$|H^B|=(-1)\cdot\begin{vmatrix}1&1&1\\1&0&-1\\2&-4&2\end{vmatrix}$$
+The 3×3 determinant, expanding along row 1:
+$$1(0\cdot2-(-1)(-4))-1(1\cdot2-(-1)\cdot2)+1(1\cdot(-4)-0\cdot2)=-4-4-4=-12.$$
+So $D_5=|H^B|=(-1)(-12)=\mathbf{12}$.</p></div></div>
+<div class="step"><div class="sn">6</div><div><p><b>Apply the rule.</b> The sign of $(-1)^m=(-1)^2$ is positive. $D_5=12>0$ has this sign, so $x_0$ is a <b>minimum</b>.</p></div></div>
+<div class="answer"><p>Minimum at $x_0=(3,2,1)$ with $\lambda_1=4,\ \lambda_2=2$, and $f_{\min}=9+4+1=14$.</p></div>
+<div class="callout tip"><p class="ct">Sanity check: does "minimum" make sense?</p><p>$f$ is the squared distance from the origin. Two planes meet in a line, so the problem asks for the point of that line nearest the origin. A nearest point is obviously a minimum, and there is no farthest point. The bordered Hessian agrees. A quick "does this make sense?" check like this catches sign slips in the determinant.</p></div>
+</div>
+
+<div class="example" id="ex-bh-m2-max"><div class="eh">Example 4: two constraints, a maximum (n = 3, m = 2)</div>
+<div class="problem"><p>Optimise $z=6x_1+14x_2+6x_3-x_1^2-2x_2^2-x_3^2$ subject to
+$$x_1+x_2+x_3=6,\qquad x_1+2x_2-x_3=2.$$</p></div>
+<div class="step"><div class="sn">1</div><div><p><b>Lagrangian.</b>
+$$\begin{aligned}L=\ &6x_1+14x_2+6x_3-x_1^2-2x_2^2-x_3^2\\ &-\lambda_1(x_1+x_2+x_3-6)-\lambda_2(x_1+2x_2-x_3-2).\end{aligned}$$</p></div></div>
+<div class="step"><div class="sn">2</div><div><p><b>Necessary conditions.</b>
+$$\frac{\partial L}{\partial x_1}=6-2x_1-\lambda_1-\lambda_2=0\ \Rightarrow\ x_1=\frac{6-\lambda_1-\lambda_2}{2}$$
+$$\frac{\partial L}{\partial x_2}=14-4x_2-\lambda_1-2\lambda_2=0\ \Rightarrow\ x_2=\frac{14-\lambda_1-2\lambda_2}{4}$$
+$$\frac{\partial L}{\partial x_3}=6-2x_3-\lambda_1+\lambda_2=0\ \Rightarrow\ x_3=\frac{6-\lambda_1+\lambda_2}{2}$$
+Substitute into the constraints. Useful pieces: $x_1+x_3=6-\lambda_1$ and $x_1-x_3=-\lambda_2$.</p>
+<ul>
+<li>Constraint 1: $(6-\lambda_1)+\tfrac{14-\lambda_1-2\lambda_2}{4}=6$, so $14-\lambda_1-2\lambda_2=4\lambda_1$, i.e. $\ 5\lambda_1+2\lambda_2=14$.</li>
+<li>Constraint 2: $(x_1-x_3)+2x_2=-\lambda_2+\tfrac{14-\lambda_1-2\lambda_2}{2}=2$, so $14-\lambda_1-4\lambda_2=4$, i.e. $\ \lambda_1+4\lambda_2=10$.</li></ul>
+<p>From the second, $\lambda_1=10-4\lambda_2$. Then $50-20\lambda_2+2\lambda_2=14$, so $\lambda_2=2$ and $\lambda_1=2$. Hence
+$$x_1=\tfrac{6-4}{2}=1,\quad x_2=\tfrac{14-2-4}{4}=2,\quad x_3=\tfrac{6-2+2}{2}=3.$$
+Check: $1+2+3=6$ ✓ and $1+4-3=2$ ✓.</p></div></div>
+<div class="step"><div class="sn">3</div><div><p><b>Bordered Hessian.</b> Border rows $(1,1,1)$ and $(1,2,-1)$. $V=\operatorname{diag}(-2,-4,-2)$.
+$$H^B=\left[\begin{array}{cc|ccc}
+0&0&1&1&1\\
+0&0&1&2&-1\\ \hline
+1&1&-2&0&0\\
+1&2&0&-4&0\\
+1&-1&0&0&-2
+\end{array}\right]$$</p></div></div>
+<div class="step"><div class="sn">4</div><div><p><b>Evaluate $D_5=|H^B|$</b> with the same steps as Example 3.</p>
+<p>$R_4\to R_4-R_3$ gives $(0,1,2,-4,0)$, and $R_5\to R_5-R_3$ gives $(0,-2,2,0,-2)$. Expand along column 1 (entry $1$ at $(3,1)$, sign $+$):
+$$|H^B|=\begin{vmatrix}0&1&1&1\\0&1&2&-1\\1&2&-4&0\\-2&2&0&-2\end{vmatrix}$$
+$R_4\to R_4+2R_3$ gives $(0,6,-8,-2)$. Expand along column 1 (entry $1$ at $(3,1)$, sign $+$):
+$$|H^B|=\begin{vmatrix}1&1&1\\1&2&-1\\6&-8&-2\end{vmatrix}=1(-4-8)-1(-2+6)+1(-8-12)=-12-4-20=\mathbf{-36}.$$</p></div></div>
+<div class="step"><div class="sn">5</div><div><p><b>Apply the rule.</b> $D_5=-36\lt0$. That is not the sign of $(-1)^2$ (so not a minimum), but it is the sign of $(-1)^{m+1}=(-1)^3$. So $x_0$ is a <b>maximum</b>.</p></div></div>
+<div class="answer"><p>Maximum at $x_0=(1,2,3)$ with $\lambda_1=\lambda_2=2$, and $z_{\max}=6+28+18-1-8-9=34$.</p></div>
+<div class="callout tip"><p class="ct">Sanity check</p><p>$V=\operatorname{diag}(-2,-4,-2)$ is negative definite, so $z$ is concave, and the constraints are linear. A stationary point of a concave function on linear constraints must be a (global) maximum, as §6.4 says. The determinant agrees.</p></div>
+</div>
+
+<div class="callout plain"><p class="ct">What if $n=4$ and $m=2$?</p><p>Then $n-m=2$ minors must be checked: $D_5$ (the leading 5×5) and $D_6=|H^B|$. Minimum: both positive. Maximum: $D_5\lt0$, then $D_6>0$. The procedure is the same, with one more determinant. For more $m=2$ practice, see the PYQs <a href="#pyq-26a">Summer 2026 Q5(a)</a> and <a href="#pyq-25b">2025 Q5(b)</a>.</p></div>
+
 <h3 id="s6-5"><span class="sub">6.5</span>The complete procedure (exam template)</h3>
 <div class="flow">
   <div class="fbox"><b>1. Lagrangian.</b> Write each constraint as $h_i=g_i-b_i=0$. Form $L=f-\sum\lambda_ih_i$.</div><div class="farrow"></div>
