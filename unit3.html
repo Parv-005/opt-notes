@@ -1303,12 +1303,61 @@ $$\text{A: Min } \sum x_i \ \text{ s.t. } \sum_i a_{ij}x_i \ge 1\ \forall j;\qqu
 </div></details>
 
 <details class="sol" id="q-e25-3c"><summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg><span class="qt"><span class="qtitle">Endsem 2025 · Q3c <span class="tags"><span class="tag">Saddle point: range of λ, μ</span></span></span><span class="qsub">Find the range of $\lambda$ and $\mu$ that makes entry (2,2) a saddle point: $\begin{bmatrix}3&5&8\\9&6&\lambda\\5&\mu&7\end{bmatrix}$</span></span></summary><div class="solbody">
-<p>$a_{22} = 6$ must be the minimum of row 2 and the maximum of column 2.</p>
+<div class="callout tip"><p class="ct">What earns the 5 marks</p><ol>
+<li>The saddle point rule, stated.</li>
+<li>The table with every row minimum and column maximum, written as expressions in λ and μ.</li>
+<li>The two conditions, with the reason for each.</li>
+<li>A check that maximin = minimax = 6 in that range.</li>
+<li>A case table showing that every other range fails.</li>
+<li>The final answer with the value and strategies.</li>
+</ol></div>
+
+<h4>Step 1. The rule</h4>
+<p>Entry $a_{rs}$ is a saddle point when it is the <b>smallest entry in its row</b> and the <b>largest entry in its column</b>; then maximin = minimax = $a_{rs}$. Here $a_{22} = 6$, so 6 must be the minimum of row 2 and the maximum of column 2.</p>
+
+<h4>Step 2. Row minima and column maxima in terms of λ and μ</h4>
+<p>Drop entries that can never be the min or max. For example, in row 2 the entry 9 can never be the minimum while 6 is there.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>A \ B</th><th>B<sub>1</sub></th><th>B<sub>2</sub></th><th>B<sub>3</sub></th><th>Row min</th></tr></thead>
+<tbody>
+<tr><th>A<sub>1</sub></th><td>3</td><td>5</td><td>8</td><td>$\min\{3, 5, 8\} = 3$</td></tr>
+<tr><th>A<sub>2</sub></th><td>9</td><td><b>6</b></td><td>λ</td><td>$\min\{9, 6, \lambda\} = \min\{6, \lambda\}$</td></tr>
+<tr><th>A<sub>3</sub></th><td>5</td><td>μ</td><td>7</td><td>$\min\{5, \mu, 7\} = \min\{5, \mu\}$</td></tr>
+<tr><th>Col max</th><td>$\max\{3, 9, 5\} = 9$</td><td>$\max\{5, 6, \mu\} = \max\{6, \mu\}$</td><td>$\max\{8, \lambda, 7\} = \max\{8, \lambda\}$</td><td></td></tr>
+</tbody></table></div>
+
+<h4>Step 3. Conditions for (2,2) to be a saddle point</h4>
 <ul>
-<li>Row 2 is $(9, 6, \lambda)$: $6 \le 9$ ✓, so we need $6 \le \lambda$.</li>
-<li>Column 2 is $(5, 6, \mu)$: $6 \ge 5$ ✓, so we need $6 \ge \mu$.</li>
+<li><b>6 is the minimum of row 2:</b> $\min\{6, \lambda\} = 6$ ⇔ $\boldsymbol{\lambda \ge 6}$.</li>
+<li><b>6 is the maximum of column 2:</b> $\max\{6, \mu\} = 6$ ⇔ $\boldsymbol{\mu \le 6}$.</li>
 </ul>
-<div class="answer"><p>$\lambda \ge 6$ and $\mu \le 6$; the value is then $v = 6$, with A playing $A_2$ and B playing $B_2$.</p></div>
+
+<h4>Step 4. Verify maximin = minimax when $\lambda \ge 6$, $\mu \le 6$</h4>
+$$\begin{aligned}
+\text{Maximin} &= \max\{3,\ \min\{6, \lambda\},\ \min\{5, \mu\}\} = \max\{3,\ 6,\ (\le 5)\} = 6\\
+\text{Minimax} &= \min\{9,\ \max\{6, \mu\},\ \max\{8, \lambda\}\} = \min\{9,\ 6,\ (\ge 8)\} = 6
+\end{aligned}$$
+<p>Maximin = minimax = 6, so the game is strictly determinable and $(A_2, B_2)$ is a saddle point ✓.</p>
+
+<h4>Step 5. Every other range fails (range by range)</h4>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Range</th><th>Row-2 min</th><th>Col-2 max</th><th>Is (2,2) a saddle point?</th></tr></thead>
+<tbody>
+<tr><td>$\lambda \ge 6,\ \mu \le 6$</td><td>6</td><td>6</td><td><b>Yes</b></td></tr>
+<tr><td>$\lambda &lt; 6$ (any μ)</td><td>λ &lt; 6</td><td>—</td><td>No: 6 is not the smallest in its row</td></tr>
+<tr><td>$\mu &gt; 6$ (any λ)</td><td>—</td><td>μ &gt; 6</td><td>No: 6 is not the largest in its column</td></tr>
+</tbody></table></div>
+
+<h4>Step 6. Is the saddle point unique? (≤ or &lt;)</h4>
+<p>At the boundary values the saddle point is still only (2,2):</p>
+<ul>
+<li>If $\lambda = 6$, then $a_{23} = 6$ is also a minimum of row 2. But column 3 is $(8, 6, 7)$, whose maximum is 8, not 6, so $a_{23}$ is <b>not</b> a saddle point.</li>
+<li>If $\mu = 6$, then $a_{32} = 6$ is also a maximum of column 2. But row 3 is $(5, 6, 7)$, whose minimum is 5, not 6, so $a_{32}$ is <b>not</b> a saddle point.</li>
+</ul>
+<p>So equality is allowed, and (2,2) is the <b>only</b> saddle point for the whole range. This differs from 2022 Q3a, where equality creates a second saddle point.</p>
+
+<div class="answer"><p>Entry (2,2) is a saddle point if and only if $\lambda \ge 6$ and $\mu \le 6$.<br>Then the game is strictly determinable with value $v = 6$ (not fair, since $v \ne 0$). A always plays $A_2$, and B always plays $B_2$.</p></div>
+<p class="small muted">Quick check with $\lambda = 10,\ \mu = 0$: row minima 3, 6, 0 give maximin 6; column maxima 9, 6, 10 give minimax 6 ✓. With $\lambda = 4$: row 2 becomes $(9, 6, 4)$, so its minimum is 4 and (2,2) fails ✗.</p>
 </div></details>
 
 <h3>Summer Semester July 2026</h3>
