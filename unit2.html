@@ -541,6 +541,16 @@ table.tbl.scidx td{vertical-align:middle}
 table.tbl.scidx td:first-child{white-space:nowrap}
 table.tbl tr.best td{background:var(--ex-bg);font-weight:650}
 .al-demo{display:inline-block;border:1.5px solid var(--def);border-radius:6px;padding:0 5px;font-weight:700;color:var(--def);background:var(--def-bg);font-family:var(--sans);font-size:.9em}
+.fc-s.sc{border-color:var(--tip);background:var(--tip-bg)}
+.fc-s.sc .n{background:var(--tip)}
+.fc-br .sc{color:var(--tip);border-color:var(--tip)}
+.fc-br .sc::before{content:"⚠ "}
+.fc-sub{display:block;margin-top:4px;font-size:13.5px;color:var(--muted)}
+.fc-sub b{color:var(--text)}
+.fc-grid2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px}
+.fc-grid2 > div{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:13px;line-height:1.45}
+.fc-grid2 > div b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-text)}
+@media (max-width:700px){.fc-grid2{grid-template-columns:1fr}}
 
 /* ---------- misc ---------- */
 .kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:16px}
@@ -625,7 +635,7 @@ footer{border-top:1px solid var(--border);margin-top:60px;padding-top:18px;font-
     <li><a href="#s9"><span class="num">9</span>Practice questions</a></li>
     <li><a href="#s10"><span class="num">10</span>Cheat sheet &amp; memory hooks</a></li>
     <li><a href="#pyq"><span class="num">11</span>Solved PYQs</a>
-      <ol><li><a href="#pyq-key">Reading TP / AP solutions</a></li><li><a href="#pyq-sc">Special cases at a glance</a></li></ol></li>
+      <ol><li><a href="#fc-tp">Flowchart: transportation</a></li><li><a href="#fc-ap">Flowchart: assignment</a></li><li><a href="#pyq-key">Reading TP / AP solutions</a></li><li><a href="#pyq-sc">Special cases at a glance</a></li></ol></li>
     <li><a href="#tut"><span class="num">12</span>Tutorial questions</a></li>
     <li><a href="#tools"><span class="num">13</span>Flashcards &amp; solver</a></li>
   </ol>
@@ -1218,6 +1228,48 @@ $x_k$ enters the basis; its column is the <b>pivot column</b>. (All these ratios
 <h2><span class="secnum">11</span>Solved PYQs</h2>
 <p class="sec-intro">Every Unit 2 question from the 2022, 2024, 2025 and Summer 2026 end-semester papers and the 2024, 2025 and 2026 mid-semester papers: duality, dual simplex, <b>transportation</b> and <b>assignment</b>. Try each one first, then open the solution. Duality answers were confirmed by an exact-fraction solver and strong duality; every transportation optimum was cross-checked against an LP solve, and every assignment against all possible assignments.</p>
 <div class="callout tip"><p class="ct">Special cases are marked</p><p>A question whose working hits a special case carries an orange <span class="tag t-sc">tag</span> in its title, and inside the solution an orange <b>Special case</b> box sits at the exact step where it happens, saying how to spot it and what to do. The table below lists every special case and where it occurs.</p></div>
+<h3 id="pyq-fc">Flowcharts: the steps to follow</h3>
+<p>One card for each problem type. Blue boxes are decisions, orange boxes are special cases (each links to a PYQ where it happens), green is the finish. The right-hand column is the line to remember.</p>
+
+<div class="fc-card" id="fc-tp">
+<h3>Transportation problem (minimise cost)</h3>
+<p class="fc-use">Rows = sources (supply $a_i$), columns = destinations (demand $b_j$), $c_{ij}$ = cost per unit. $m$ rows, $n$ columns.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s"><span class="n">1</span><b>Write the cost table</b> with supplies on the right and demands at the bottom.<span class="fc-sub">Adjust the costs first if needed:</span><div class="fc-br"><a class="sc" href="#q-e22-2c">Production cost per unit → add it to every cell of that row</a><span class="sc">Route not allowed → cost ∞ there</span><span class="sc">Maximise profit → use (largest − profit)</span></div></div><div class="fc-h"><b>Fix the costs before anything else.</b> Fixed costs never change the routes: add them at the very end.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">2</span><b>Is $\sum a_i = \sum b_j$?</b><div class="fc-br"><span class="y">Yes → balanced, go to 3</span><a class="sc" href="#t2-7">No → add a dummy row or column, cost 0</a></div><span class="fc-sub">Supply bigger → dummy <b>column</b> (destination) for the extra supply. Demand bigger → dummy <b>row</b> (source) for the shortfall.</span></div><div class="fc-h"><b>The dummy goes on the side that is short.</b> Dummy cells cost 0 and mean "not sent" or "not received".</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span><b>Initial basic feasible solution</b> by the method the question asks (VAM if it does not say).<div class="fc-grid2"><div><b>North-West Corner</b>Start top-left; allocate min(supply, demand); move right if the column is done, down if the row is done.</div><div><b>Least Cost</b>Cheapest available cell; allocate the max; cross out the finished row or column; repeat.</div><div><b>VAM</b>Penalty = 2nd smallest − smallest cost in each row and column. Largest penalty → its cheapest cell → allocate the max → cross out → recompute.</div></div><div class="fc-br"><a class="sc" href="#q-m26-3a">Tie in penalty or cost → smaller cost, then larger quantity</a></div></div><div class="fc-h"><b>VAM: "biggest penalty, cheapest cell".</b> The penalty is the extra cost of <i>not</i> using the cheapest cell.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">4</span><b>Count the allocations. Are there $m + n - 1$?</b><div class="fc-br"><span class="y">Yes → non-degenerate, go to 5</span><a class="sc" href="#q-m24-5a">No → degenerate: put ε in an empty cell</a></div><span class="fc-sub">Choose the <b>cheapest</b> empty cell that does <b>not</b> make a closed loop with the allocated cells. Treat ε as an allocation.</span></div><div class="fc-h"><b>"m + n − 1, or add ε."</b> Too few cells and the $u_i, v_j$ cannot all be found.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">5</span><b>Find $u_i$ and $v_j$.</b> Put $u_1 = 0$. For every <b>allocated</b> cell, $u_i + v_j = c_{ij}$; solve them one by one.</div><div class="fc-h"><b>Full cells: $u + v = c$.</b> Negative values are fine (they are free dual variables).</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">6</span><b>For every empty cell</b> compute $\Delta_{ij} = u_i + v_j - c_{ij}$ and write it in the cell.</div><div class="fc-h"><b>Empty cells: $u + v - c$.</b></div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">7</span><b>Are all $\Delta_{ij} \le 0$?</b><div class="fc-br"><span class="y">Yes → optimal, go to 10</span><span class="no">No → the most positive $\Delta_{ij}$ cell enters</span></div></div><div class="fc-h"><b>Positive Δ = money still to be saved.</b> Biggest positive enters.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">8</span><b>Closed loop</b> from the entering cell: move only along rows and columns, turn only at allocated cells, come back to the start. Mark the corners $+, -, +, -, \ldots$ starting with $+$ at the entering cell.</div><div class="fc-h"><b>"Start plus, turn only at full cells, alternate."</b> No diagonal moves.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">9</span><b>θ = smallest allocation in a − cell.</b> Add θ to every + corner, subtract it from every − corner. The − cell that becomes 0 leaves.<div class="fc-br"><a class="sc" href="#t2-7">Two − cells hit 0 → only one leaves, the other stays as ε</a><a class="sc" href="#t2-7">θ = ε → cost unchanged, basis changes</a></div><span class="fc-loop">↺ Back to step 5 with the new table (new cost = old − Δ × θ).</span></div><div class="fc-h"><b>θ = smallest on the minus corners.</b> Row and column totals stay correct automatically.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">10</span><b>Optimal table: is some $\Delta_{ij} = 0$ in an empty cell?</b><div class="fc-br"><span class="y">No → unique optimum</span><a class="sc" href="#t2-8">Yes → alternative optimum: loop on that cell</a></div></div><div class="fc-h"><b>Zero Δ = free swap.</b> Same rule as $Z_j - C_j = 0$ in simplex.</div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span><b>Answer:</b> list the routes and quantities (ε → 0), total cost $= \sum c_{ij}x_{ij}$. Explain any dummy allocation (unsent supply or unmet demand) and add fixed costs if given.</div><div class="fc-h"><b>Cost from the original table.</b> Check: optimal cost $= \sum a_iu_i + \sum b_jv_j$.</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-s26-2c">S2026 Q2c</a> (VAM + u–v) · <a href="#q-e24-2b">End 2024 Q2b</a> (check a given schedule) · <a href="#q-m24-5a">Mid 2024 Q5a</a> (degenerate) · <a href="#t2-7">Tut 2 Q7</a> (unbalanced, all three starts) · <a href="#t2-8">Tut 2 Q8</a> (alternative optima)</p>
+</div>
+
+<div class="fc-card" id="fc-ap">
+<h3>Assignment problem (Hungarian method)</h3>
+<p class="fc-use">Rows = workers or machines, columns = jobs. One job per worker, one worker per job.</p>
+<div class="fc-head"><span>Steps</span><span>Memory hook</span></div>
+<div class="fc">
+<div class="fc-row"><div class="fc-s dec"><span class="n">1</span><b>Is the matrix square?</b><div class="fc-br"><span class="y">Yes → go to 2</span><a class="sc" href="#t2-10">No → add dummy rows or columns of 0</a></div><span class="fc-sub">A job matched with a dummy worker is <b>declined</b>; a worker matched with a dummy job stays <b>idle</b>.</span></div><div class="fc-h"><b>Square it first.</b> Dummies cost 0.</div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">2</span><b>Minimise or maximise?</b><div class="fc-br"><span class="y">Minimise cost or time → go to 3</span><a class="sc" href="#t2-10">Maximise profit → subtract every entry from the largest</a></div><div class="fc-br"><a class="sc" href="#q-e24-2c">Machine unavailable → delete its row, then balance</a><span class="sc">Pairing not allowed → cost ∞ in that cell</span></div></div><div class="fc-h"><b>Hungarian only minimises.</b> Profit → regret = largest − profit.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">3</span><b>Row reduction:</b> subtract each row's smallest entry from that row.</div><div class="fc-h"><b>Rows first…</b></div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">4</span><b>Column reduction:</b> subtract each column's smallest entry from that column (columns that already have a 0 stay as they are).</div><div class="fc-h"><b>…then columns.</b> Now every row and column has a 0.</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">5</span><b>Make assignments.</b> Row by row: a row with exactly <b>one</b> unmarked 0 → <span class="az sm">box</span> it, <span class="ax sm">cross</span> the other zeros in its column. Then column by column: one unmarked 0 → box it, cross the other zeros in its row. Repeat until every 0 is boxed or crossed.<div class="fc-br"><a class="sc" href="#q-e25-2b">Every row and column has 2+ zeros → box one arbitrarily, cross the rest in its row and column</a></div></div><div class="fc-h"><b>"A lonely zero gets the box."</b></div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">6</span><b>Number of boxed zeros = $n$?</b><div class="fc-br"><span class="y">Yes → optimal, go to 9</span><span class="no">No → go to 7</span></div></div><div class="fc-h"><b>One box in every row = done.</b></div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">7</span><b>Cover all zeros with the fewest lines:</b><span class="fc-sub">(a) ✓ rows with <b>no</b> box. (b) ✓ columns that have a 0 in a ticked row. (c) ✓ rows that have a <b>box</b> in a ticked column. Repeat (b)–(c) until nothing new.<br>Draw lines through the <b>unticked rows</b> and the <b>ticked columns</b>. Number of lines = number of boxes &lt; $n$.</span></div><div class="fc-h"><b>Tick: empty rows → their zero columns → those columns' box rows.</b> Lines: <b>U</b>nticked <b>R</b>ows, <b>T</b>icked <b>C</b>olumns ("URTC").</div></div>
+<div class="fc-row"><div class="fc-s"><span class="n">8</span><b>θ = smallest uncovered entry.</b> Subtract θ from every uncovered entry, add θ at every intersection of two lines, leave the other covered entries unchanged.<span class="fc-loop">↺ Back to step 5 with the new matrix (start the boxes afresh).</span></div><div class="fc-h"><b>"Minus the open, plus the crossings, singles stay."</b></div></div>
+<div class="fc-row"><div class="fc-s dec"><span class="n">9</span><b>Can $n$ independent zeros be picked in another way?</b><div class="fc-br"><span class="y">No → unique optimum</span><a class="sc" href="#q-e24-2c">Yes → alternative optimal assignment (same total)</a></div></div><div class="fc-h"><b>Different box pattern, same total.</b></div></div>
+<div class="fc-row"><div class="fc-s end"><span class="n">✓</span><b>Answer:</b> the pairs (row → column) and the total, read from the <b>original</b> matrix (profit for a maximisation). Name the declined job or idle worker if there is a dummy.</div><div class="fc-h"><b>Total from the original matrix,</b> never from the reduced one.</div></div>
+</div>
+<p class="fc-prac">Practise: <a href="#q-m25-5b">Mid 2025 Q5b</a> (4×4) · <a href="#q-e24-2c">End 2024 Q2c</a> (lines, alternative optima, unavailable machine) · <a href="#q-e25-2b">End 2025 Q2b</a> (arbitrary zero) · <a href="#q-s26-2b">S2026 Q2b</a> (6×6) · <a href="#t2-10">Tut 2 Q10</a> (maximise, unbalanced)</p>
+</div>
+
 <h3 id="pyq-key">Reading the transportation and assignment solutions</h3>
 <ul>
 <li><b>Transportation tables:</b> the unit cost $c_{ij}$ is in the corner of each cell; an allocation is <span class="al-demo">boxed</span>; ε is a zero-level basic cell. In the u–v test, empty cells show $\Delta_{ij} = u_i + v_j - c_{ij}$ (class convention: optimal when all $\Delta_{ij} \le 0$, the most positive one enters). Loop cells carry <b style="color:var(--ex)">+</b> / <b style="color:var(--warn)">−</b>; the entering cell has a dashed outline.</li>
